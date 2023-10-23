@@ -9,6 +9,10 @@ body{
     background: #dbf159; 
 }
 
+.navbar{
+    background-color: dodgerblue;
+}
+
 .app{
     background: white;
     width: 80%;
@@ -49,8 +53,12 @@ body{
     border-radius: 4px;
 }
 
-.btn:hover{
+.btn:hover:not([disabled]){
     border-color: cyan;
+}
+
+.btn:disabled{
+    cursor: no-drop;
 }
 
 #next-btn{
@@ -67,4 +75,12 @@ body{
 
 #next-btn:hover{
     border-color: yellow;
+}
+
+.correct{
+    background: green;
+}
+
+.incorrect{
+    background: red;
 }
