@@ -76,6 +76,7 @@ const nextButton = document.getElementById("next-btn");
 
 let currentQuestionIndex = 0;
 let score = 0;
+var time = 60;
 
 function startQuiz(){
     currentQuestionIndex = 0;
@@ -118,6 +119,7 @@ function selectAnswer(e){
         score++;
     }else{
         selectedBtn.classList.add("incorrect");
+        time = time-5
     }
     Array.from(answerBtn.children).forEach(button => {
         if(button.dataset.correct === "true"){
@@ -130,9 +132,18 @@ function selectAnswer(e){
 
 function showScore(){
     resetState();
-    questionElement.innerHTML = 'You scored ${score} out of 7!';
+    questionElement.innerHTML = 'You scored ' + score + ' out of 7!';
+    questionElement.innerHTML += '<input id="finScore"> <button id="finBtn">save</button>';
+    document.getElementById("finBtn").addEventListener("click", finalScore)
+    clearInterval(timerId)
     nextButton.innerHTML = "Play Again?";
     nextButton.style.display();
+}
+
+function finalScore(){
+    var finScore = document.getElementById('finScore').value;
+    console.log("Final Score " + finScore);
+    localStorage.setItem("highScore", finScore + time)
 }
 
 function handleNextButton(){
@@ -152,5 +163,18 @@ nextButton.addEventListener("click",()=>{
         startQuiz();
     }
 });
+
+var timerId = setInterval(function(){
+    var timer = document.getElementById('countdown-timer');
+    console.log(time);
+    time--
+    timer.textContent = time
+    if(time <= 0){
+        console.log('gameover');
+        clearInterval(timerId);
+    }
+},1000)
+
+
 
 startQuiz();
